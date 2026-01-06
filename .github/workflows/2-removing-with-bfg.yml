@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - id: get_step
         run: |
           echo "current_step=$(cat ./.github/steps/-step.txt)" >> $GITHUB_OUTPUT
@@ -48,14 +48,14 @@ jobs:
     steps:
       # We'll need to check out the repository so that we can edit the README.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0 # Let's get all the branches.
 
       # Logic for step 2
       - name: Ensure .env is gone from history
         run: |
-          res_delete = $(git log --stat --all -- .env)
+          git log --stat --all -- .env
           if [ $? != 0 ]; then
             echo "File .env is still in the repository's history, please remove it."
             exit 1
